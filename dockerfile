@@ -1,32 +1,31 @@
-# Start with a base image that supports Python 3.12
-FROM ubuntu:22.04
+FROM ubuntu:noble
 
-# Update the system and install dependencies
-RUN apt-get update && apt-get install -y \
-    software-properties-common \
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get upgrade -y
+
+RUN apt install software-properties-common -y && add-apt-repository ppa:deadsnakes/ppa
+RUN apt update && apt install python3.12
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
-    wget \
     build-essential \
-    libssl-dev \
     zlib1g-dev \
-    libbz2-dev \
-    libreadline-dev \
-    libsqlite3-dev \
-    libffi-dev \
     libncurses5-dev \
     libgdbm-dev \
     libnss3-dev \
-    liblzma-dev \
-    && apt-get clean
+    libssl-dev \
+    libreadline-dev \
+    libffi-dev \
+    libsqlite3-dev \
+    wget \
+    libbz2-dev && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Add the deadsnakes PPA and install Python 3.12
-RUN add-apt-repository ppa:deadsnakes/ppa && \
-    apt-get update && \
-    apt-get install -y python3.12
-
-
-# Verify Python and pip installation
 RUN python3.12 --version && pip --version
 
-# Default command (adjust as needed)
-CMD ["python3.12"]
+WORKDIR /opt/odoo
+
+COPY requirements.txt /opt/odoo
+
+RUN pip3.12 install -r requirements.txt
