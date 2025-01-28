@@ -35,6 +35,4 @@ WORKDIR /opt/odoo
 
 COPY requirements.txt /opt/odoo
 
-RUN python3.12 -m venv venv && \
-    . venv/bin/activate && \
-    pip install --no-cache-dir -r requirements.txt
+RUN pip3 install --no-cache-dir -r requirements.txt
