@@ -89,7 +89,7 @@ WORKDIR /opt/odoo
 
 COPY requirements.txt /opt/odoo/
 
-RUN pip install --upgrade pip && pip install --no-cache-dir -r /opt/odoo/requirements.txt
+RUN pip3 install --no-cache-dir -r /opt/odoo/requirements.txt
 
 WORKDIR /opt/odoo
 
