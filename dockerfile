@@ -5,10 +5,14 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get upgrade -y
 
 RUN apt install software-properties-common -y && add-apt-repository ppa:deadsnakes/ppa
-RUN apt update && apt install python3.12
+
+RUN apt-get update && apt-get install -y \
+    python3.12 \
+    python3.12-distutils \
+    curl \
+    && apt-get clean
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    curl \
     build-essential \
     zlib1g-dev \
     libncurses5-dev \
@@ -25,7 +29,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN curl -sS https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
     python3.12 get-pip.py && \
     rm get-pip.py
-    
+
 RUN python3.12 --version && pip --version
 
 WORKDIR /opt/odoo
