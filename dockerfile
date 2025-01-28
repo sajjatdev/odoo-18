@@ -28,4 +28,4 @@ WORKDIR /opt/odoo
 
 COPY requirements.txt /opt/odoo
 
-RUN pip3.12 install -r requirements.txt
+RUN pip install -r requirements.txt
