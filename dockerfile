@@ -7,6 +7,14 @@ RUN apt-get update && apt-get upgrade -y
 RUN apt install software-properties-common -y && add-apt-repository ppa:deadsnakes/ppa
 RUN apt update && apt install python3.12
 
+RUN apt-get update && \
+    apt-get install -y \
+    python3.12 \
+    python3.12-venv \
+    python3.12-dev \
+    python3-pip \
+    && apt-get clean
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     build-essential \
@@ -22,10 +30,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libbz2-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN python3.12 --version && pip --version
 
 WORKDIR /opt/odoo
 
 COPY requirements.txt /opt/odoo
 
-RUN pip install -r requirements.txt
+RUN python3.12 -m venv venv && \
+    . venv/bin/activate && \
+    pip install --no-cache-dir -r requirements.txt
