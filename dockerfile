@@ -1,3 +1,3 @@
 FROM ubuntu:noble
 
-RUN sudo apt update
+RUN apt-get update && apt-get upgrade -y
