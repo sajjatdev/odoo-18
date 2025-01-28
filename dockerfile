@@ -5,7 +5,14 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get upgrade -y
 
 RUN apt install software-properties-common -y && add-apt-repository ppa:deadsnakes/ppa
-RUN apt update && apt install python3.12
+
+RUN apt-get update && \
+    apt-get install -y \
+    python3.12 \
+    python3.12-venv \
+    python3.12-dev \
+    python3-pip \
+    && apt-get clean
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
