@@ -23,12 +23,7 @@ RUN apt-get update && apt-get install -y \
 RUN add-apt-repository ppa:deadsnakes/ppa && \
     apt-get update && \
     apt-get install -y python3.12
-    
-# Use ensurepip to install pip
-RUN python3.12 -m ensurepip --upgrade
 
-# Install pip for Python 3.12
-RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python3.12
 
 # Verify Python and pip installation
 RUN python3.12 --version && pip --version
