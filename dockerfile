@@ -26,14 +26,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libbz2-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN curl -sS https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
-    python3.12 get-pip.py && \
-    rm get-pip.py
 
 RUN python3.12 --version && pip --version
 
-WORKDIR /opt/odoo
+# WORKDIR /opt/odoo
 
-COPY requirements.txt /opt/odoo
+# COPY requirements.txt /opt/odoo
 
-RUN pip3.12 install -r requirements.txt
+# RUN pip3.12 install -r requirements.txt
