@@ -22,8 +22,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libbz2-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN python3.12 --version && pip --version
-
 WORKDIR /opt/odoo
 
 COPY requirements.txt /opt/odoo
