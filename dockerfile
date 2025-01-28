@@ -83,7 +83,6 @@ RUN echo 'deb http://apt.postgresql.org/pub/repos/apt/ noble-pgdg main' > /etc/a
     && rm -f /etc/apt/sources.list.d/pgdg.list \
     && rm -rf /var/lib/apt/lists/*
 
-# Install rtlcss (on Debian buster)
 RUN npm install -g rtlcss
 
 WORKDIR /opt/odoo
@@ -91,3 +90,26 @@ WORKDIR /opt/odoo
 COPY requirements.txt /opt/odoo/
 
 RUN pip install --upgrade pip && pip install --no-cache-dir -r /opt/odoo/requirements.txt
+
+WORKDIR /opt/odoo
+
+COPY . /opt/odoo/
+
+COPY ./odoo.conf /etc/odoo/
+
+RUN chown odoo /etc/odoo/odoo.conf \
+    && mkdir -p /mnt/extra-addons \
+    && chown -R odoo /mnt/extra-addons
+VOLUME ["/var/lib/odoo", "/mnt/extra-addons"]
+
+EXPOSE 8069 8071 8072
+
+ENV ODOO_RC /etc/odoo/odoo.conf
+
+COPY wait-for-psql.py /usr/local/bin/wait-for-psql.py
+
+USER odoo
+
+ENTRYPOINT ["/etc/odoo/entrypoint.sh"]
+
+CMD ["odoo"]
