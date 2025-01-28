@@ -9,6 +9,7 @@ RUN apt update && apt install python3.12
 RUN python3.12 --version
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
     build-essential \
     zlib1g-dev \
     libncurses5-dev \
@@ -21,3 +22,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     wget \
     libbz2-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
+
+RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python3.12 
+
+
+WORKDIR /opt/odoo
+
+COPY requirements.txt /opt/odoo
+
+RUN pip3.12 install -r requirements.txt
